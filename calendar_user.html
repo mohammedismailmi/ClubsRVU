@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .club-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .club {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 30%;
+            box-sizing: border-box;
+        }
+        .club img {
+            width: 100%;
+            height: auto;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <h1>Clubs<span class="red">RVU</span> Calendar</h1>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <div class="container">
+        <!-- Sidebar copied from home.html -->
+        
+            
+            <aside class="sidebar">
+                <h2>Current Clubs:</h2>
+                <div>
+                    <ul>
+                        {% for club in clubs %}
+                        <li><a href="#club{{ club['id'] }}">{{ club['club_name'] }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- <a href="{{ url_for('calendar') }}">Calendar</a> -->
+            </aside>
+        
+
+        <div class="main" style="margin-left: 100px; color: black;">
+            <div class="calendar-container">
+                <h2>Events Calendar</h2>
+                <!-- Embed Google Calendar -->
+                <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FKolkata&bgcolor=%23ffffff&src=bW9oYW1tZWRpLmJ0ZWNoMjNAcnZ1LmVkdS5pbg&src=Y19jbGFzc3Jvb21kMzY3MzMyY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20zNGI1Nzc5M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20yMzVkMGM4ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb200MTYzMjJjYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20yYmZkOGVjYkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb202MjA3ZjVjOEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20xNGM3YTQ1OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21hZWQwNTAwZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21iNjdkNTFhZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb204NjJiNGYwNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb203Yjk1ZGE3MEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21mYTZhNDZkMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21jYjdlN2U1ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb201ZTEwYzJjY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23039BE5&color=%230047a8&color=%230047a8&color=%2333B679&color=%23c26401&color=%230047a8&color=%23174ea6&color=%230047a8&color=%23174ea6&color=%230047a8&color=%230B8043&color=%230047a8&color=%23b80672&color=%23202124&color=%23202124&color=%230047a8&color=%23007b83" style="border:solid 1px #777" width="1200" height="600" frameborder="0" scrolling="no"></iframe>
+                <!--            <iframe src="YOUR_GOOGLE_CALENDAR_EMBED_LINK" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>-->
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

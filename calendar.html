@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .club-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .club {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 30%;
+            box-sizing: border-box;
+        }
+        .club img {
+            width: 100%;
+            height: auto;
+        }
+        .calendar-container {
+            margin-top: 20px;
+        }
+        .event-form {
+            margin-top: 20px;
+        }
+        input {
+            width: 40%;
+            padding: 10px;
+            border: 1px solid;
+            background: transparent;
+            color: #fff;
+            border-radius:10px;
+            margin:6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <h1>Clubs<span class="red">RVU</span> Calendar</h1>
+        <a href="{{ home_url }}">Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <div class="container">
+        <!-- Sidebar copied from home.html -->
+        <aside class="sidebar">
+            <h2>Current Clubs:</h2>
+            <div>
+                <ul>
+                    {% for club in clubs %}
+                    <li><a href="#club{{ club['id'] }}">{{ club['club_name'] }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- <a href="{{ url_for('calendar') }}">Calendar</a> -->
+        </aside>
+
+        <div class="main" style="margin-left: 100px; color: black;">
+            <table>
+                <tr>
+                    <th><h2>Calendar</h2></th>
+                    <th><h2>Add Event</h2></th>
+                </tr>
+                <tr>
+                    <td>
+                        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FKolkata&bgcolor=%23ffffff&src=bW9oYW1tZWRpLmJ0ZWNoMjNAcnZ1LmVkdS5pbg&src=Y19jbGFzc3Jvb21kMzY3MzMyY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20zNGI1Nzc5M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20yMzVkMGM4ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb200MTYzMjJjYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20yYmZkOGVjYkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb202MjA3ZjVjOEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20xNGM3YTQ1OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21hZWQwNTAwZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21iNjdkNTFhZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb204NjJiNGYwNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb203Yjk1ZGE3MEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21mYTZhNDZkMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21jYjdlN2U1ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb201ZTEwYzJjY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23039BE5&color=%230047a8&color=%230047a8&color=%2333B679&color=%23c26401&color=%230047a8&color=%23174ea6&color=%230047a8&color=%23174ea6&color=%230047a8&color=%230B8043&color=%230047a8&color=%23b80672&color=%23202124&color=%23202124&color=%230047a8&color=%23007b83" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+                    </td>
+                    <td style="vertical-align: top;text-align: center;">
+                        <form method="POST" action="{{ url_for('add_event') }}">
+                            <label for="date">Date:</label>
+                            <input type="date" id="date" name="date" required><br>
+                            <label for="time">Time:</label>
+                            <input type="time" id="time" name="time" required><br>
+                            <label for="event_name">Name:</label>
+                            <input type="text" id="event_name" name="event_name" required><br>
+                            <label for="club">Club:</label>
+                            <input type="text" id="club" name="club" required><br>
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" style="width:400px"required></textarea><br>
+                            <button type="submit">Add Event</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            <!-- div class="calendar-container">
+                <h2>Events Calendar</h2>
+                
+                <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FKolkata&bgcolor=%23ffffff&src=bW9oYW1tZWRpLmJ0ZWNoMjNAcnZ1LmVkdS5pbg&src=Y19jbGFzc3Jvb21kMzY3MzMyY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20zNGI1Nzc5M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20yMzVkMGM4ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb200MTYzMjJjYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20yYmZkOGVjYkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb202MjA3ZjVjOEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20xNGM3YTQ1OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21hZWQwNTAwZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhLm9mZmljaWFsI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21iNjdkNTFhZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb204NjJiNGYwNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb203Yjk1ZGE3MEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21mYTZhNDZkMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21jYjdlN2U1ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb201ZTEwYzJjY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23039BE5&color=%230047a8&color=%230047a8&color=%2333B679&color=%23c26401&color=%230047a8&color=%23174ea6&color=%230047a8&color=%23174ea6&color=%230047a8&color=%230B8043&color=%230047a8&color=%23b80672&color=%23202124&color=%23202124&color=%230047a8&color=%23007b83" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            </div>
+            <div class="event-form">
+                <h2>Add Event</h2>
+                <form method="POST" action="{{ url_for('add_event') }}">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required><br>
+                    <label for="time">Time:</label>
+                    <input type="time" id="time" name="time" required><br>
+                    <label for="event_name">Event Name:</label>
+                    <input type="text" id="event_name" name="event_name" required><br>
+                    <label for="club">Club:</label>
+                    <input type="text" id="club" name="club" required><br>
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" required></textarea><br>
+                    <button type="submit">Add Event</button>
+                </form>
+            </div> -->
+        </div>
+    </div>
+</body>
+</html>
